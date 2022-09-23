@@ -16,7 +16,7 @@ plugins {
 
 group "app"
 version "1.0.0"
-mainClassName = "com.github.triviamasters.app.AppKt"
+mainClassName = "com.github.triviamasters.AppKt"
 sourceCompatibility = 1.8
 
 repositories {
