@@ -35,7 +35,7 @@ abstract class BuildConfigTask : DefaultTask() {
 
         val file = FileSpec.builder("com.github.triviamasters.generated", "BuildConfig")
             .addType(
-                TypeSpec.classBuilder(configClass.simpleName)
+                TypeSpec.objectBuilder(configClass.simpleName)
                     .addProperty(buildTypeSpec(builder))
                     .addProperty(useMocksSpec(builder))
                     .build()
