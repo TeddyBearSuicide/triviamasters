@@ -1,18 +1,27 @@
 package com.github.triviamasters
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.triviamasters.di.appModule
+import com.github.triviamasters.di.databaseModule
+import com.github.triviamasters.di.eventBusModule
+import com.github.triviamasters.di.objectMapperModule
 import com.github.triviamasters.eventbus.*
 import io.jooby.Kooby
-import io.jooby.json.JacksonModule
 import io.jooby.runApp
+import org.koin.core.context.startKoin
 
 class App: Kooby({
 
-    install(JacksonModule())
+    val services = startKoin {
+        modules(
+            appModule,
+            objectMapperModule,
+            eventBusModule,
+            databaseModule
+        )
+    }
 
-    val mapper = ObjectMapper()
-
-    val eventBus: EventBus = LocalEventBus(mapper)
+    val eventBus = services.koin.get<EventBus>()
     eventBus.register("test") {
         println("Got a test message: ${it.body}")
     }

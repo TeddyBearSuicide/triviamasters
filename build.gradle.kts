@@ -3,6 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.github.triviamasters.BuildConfigTask
 
+buildscript {
+    dependencies {
+        classpath("io.objectbox:objectbox-gradle-plugin:3.3.1")
+    }
+}
+
 plugins {
     val joobyVersion = "2.16.1"
     val kotlinVersion = "1.6.21"
@@ -38,11 +44,11 @@ dependencyManagement {
 }
 
 dependencies {
+    implementation("ch.qos.logback:logback-classic")
+    implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.jooby:jooby-utow")
     implementation("io.jooby:jooby-jackson")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("ch.qos.logback:logback-classic")
-    implementation("io.insert-koin:koin-core:$koinVersion")
 
     testImplementation ("io.insert-koin:koin-test:$koinVersion")
     testImplementation ("org.junit.jupiter:junit-jupiter-api")
@@ -78,3 +84,5 @@ tasks.withType<KotlinCompile>().all {
 tasks.withType<ShadowJar> {
     mergeServiceFiles()
 }
+
+apply(plugin = "io.objectbox")
